@@ -15,6 +15,9 @@
         <version>1.6.2-SNAPSHOT</version>
 	</parent>
 
+	<properties>
+		<ohadr.project.port>8094</ohadr.project.port>
+	</properties>
 
 
 
