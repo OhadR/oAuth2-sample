@@ -34,15 +34,16 @@
 	</scm>
 
 	<modules>
-		<!--module>auth-common</module>
-		<module>common-crypto</module-->
-		<module>authentication-flows</module>
+		<!--module>auth-common</module> -->
+		<module>oauth2-client</module>
+		<module>oauth2-resource-server</module>
+		<module>oauth2-auth-server</module>
 	</modules>
 
     <properties>
-        <ohadr.spring.version>3.1.0.RELEASE</ohadr.spring.version>
-        <ohadr.spring.security.version>3.1.0.RELEASE</ohadr.spring.security.version>
-        <ohadr.spring-security-oauth.version>1.0.5.RELEASE</ohadr.spring-security-oauth.version>
+        <ohadr.spring.version>4.2.4.RELEASE</ohadr.spring.version>
+        <ohadr.spring.security.version>4.0.3.RELEASE</ohadr.spring.security.version>
+        <ohadr.spring-security-oauth.version>2.0.9.RELEASE</ohadr.spring-security-oauth.version>
     </properties>
 
 
