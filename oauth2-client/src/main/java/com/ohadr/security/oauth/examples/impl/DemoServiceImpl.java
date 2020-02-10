@@ -1,5 +1,6 @@
 package com.ohadr.security.oauth.examples.impl;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestOperations;
 
@@ -10,6 +11,7 @@ import java.net.URI;
 
 public class DemoServiceImpl implements DemoService
 {
+	private static Logger log = Logger.getLogger(DemoServiceImpl.class);
 
 	@Autowired
 	private RestOperations butkeDemoRestTemplate;
@@ -25,6 +27,7 @@ public class DemoServiceImpl implements DemoService
     @Override
     public String getTrustedMessage()
     {
+    	log.info("sending GET request to " + demoUrl);
         String demo = butkeDemoRestTemplate.getForObject(URI.create(demoUrl), String.class);
         return demo;
     }
