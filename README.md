@@ -4,15 +4,27 @@ oAuth2-sample   [![Build Status](https://travis-ci.org/OhadR/oAuth2-sample.svg?b
 This project is a oAuth2 POC, consists of all 3 oAuth parties: the authentication server, a resource server, and a client app.
 Each party is represented by its own WAR.
 
-Works over spring-security-oauth 1.0.5.RELEASE.
+## 23-02-2016: Spring Versions Updated
 
-Make it work
-------------
+On 23-02-2016, we have updated Spring versions to the newest!
+
+* Spring Security: 4.0.3.RELEASE
+* Spring: 4.2.4.RELEASE
+* Spring Security oAuth: 2.0.9.RELEASE
+
+## Make it work
+
 * Deploy all 3 WARs on a servlet container, e.g. tomcat.
 * Browse http://localhost:8080/oauth2-client/hello. The client needs a login by itsealf: admin/admin (Spring Security expects your client web-app to have its own credentials).
 * client app tries to call the resource-server url http://localhost:8080/oauth2-resource-server/welcome
 * This will redirect to oauth2.0 authentication server. Login to authentication-server, currently it is from mem: demo@ohadr.com/demo. it can be configured to read from a DB.
 * client should access the resource server using the access-token, and print a message.
+
+## How to Run?
+from command line, use the following command:
+    
+    mvn clean tomcat7:run -Dohadr.project.port=<port>
+
 
 Project Components
 ==================
