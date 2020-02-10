@@ -162,10 +162,6 @@
                     </exclusion>
                     <exclusion>
                         <groupId>org.springframework</groupId>
-                        <artifactId>spring-jdbc</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.springframework</groupId>
                         <artifactId>spring-webmvc</artifactId>
                     </exclusion>
                     <exclusion>
@@ -224,12 +220,6 @@
 
             <dependency>
                 <groupId>org.springframework</groupId>
-                <artifactId>spring-jdbc</artifactId>
-                <version>${ohadr.spring.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework</groupId>
                 <artifactId>spring-context-support</artifactId>
                 <version>${ohadr.spring.version}</version>
             </dependency>
@@ -237,12 +227,6 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-webmvc</artifactId>
-                <version>${ohadr.spring.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-tx</artifactId>
                 <version>${ohadr.spring.version}</version>
             </dependency>
 
@@ -271,57 +255,6 @@
                 <version>2.3</version>
                 <scope>provided</scope>
             </dependency>
-
-
-
-            <dependency>
-                <groupId>c3p0</groupId>
-                <artifactId>c3p0</artifactId>
-                <version>0.9.1.2</version>
-            </dependency>
-
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>5.1.16</version>
-            </dependency>
-
-			<dependency>
-				<groupId>com.jamonapi</groupId>
-				<artifactId>jamon</artifactId>
-				<version>2.4</version>
-			</dependency>
-            
-            
-        <dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>2.6</version>
-		</dependency> 
-		
-		<!-- Pair impl-->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.1</version>
-		</dependency>
-            
-            
-		<!--  sending emails... -->
-		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>1.4.1</version>
-		</dependency>
-            
-
-		<!-- velocity (template email msg) -->
-		<dependency>
-			<groupId>org.apache.velocity</groupId>
-			<artifactId>velocity</artifactId>
-			<version>1.6.2</version>
-		</dependency>
-
 
 
         </dependencies>
