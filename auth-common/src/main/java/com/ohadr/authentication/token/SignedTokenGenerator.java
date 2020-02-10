@@ -11,9 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ohadr.authentication.config.AuthProperties;
 import com.ohadr.crypto.interfaces.KeystoreService;
 
 
@@ -21,6 +23,11 @@ import com.ohadr.crypto.interfaces.KeystoreService;
 @Component
 public class SignedTokenGenerator
 {
+    private static final Logger log = Logger.getLogger(SignedTokenGenerator.class);
+
+	@Autowired
+	private AuthProperties authProperties;
+
 	@Autowired
 	private KeystoreService keystoreService;
 
@@ -39,6 +46,7 @@ public class SignedTokenGenerator
 	                                           InvalidKeyException,
 	                                           SignatureException
 	{
+		log.info("creating signature for " + data);		//TODO debug
 		Signature signature = Signature.getInstance("SHA1withDSA");
 		signature.initSign(keystoreService.getPrivateKey());
 		signature.update(data.getBytes());
@@ -65,7 +73,11 @@ public class SignedTokenGenerator
 			parameters.put("pubkey", clientPublicKey);
 		}
 		String data = encodeQueryParams(parameters);
-		String signature = createSignature(data);
-		return data + ":" + signature;
+		if(authProperties.isCryptoEnabled())
+		{
+			String signature = createSignature(data);
+			data += ":" + signature;
+		}
+		return data;
 	}
 }
