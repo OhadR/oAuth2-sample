@@ -44,21 +44,8 @@
         <ohadr.spring.version>5.2.3.RELEASE</ohadr.spring.version>
         <ohadr.spring.security.version>4.0.3.RELEASE</ohadr.spring.security.version>
         <ohadr.spring-security-oauth.version>2.0.9.RELEASE</ohadr.spring-security-oauth.version>
+        <ohadr.fasterxml.jackson.core>2.9.10</ohadr.fasterxml.jackson.core>
     </properties>
-
-
-    <repositories>
-        <repository>
-            <id>spring-milestone</id>
-            <name>Spring Framework Milestone Repository</name>
-            <url>http://maven.springframework.org/milestone</url>
-        </repository>
-        <repository>
-            <id>spring-release</id>
-            <name>Spring Framework Release Repository</name>
-            <url>http://maven.springframework.org/release</url>
-        </repository>
-    </repositories>
 
 
 	<build>
@@ -255,6 +242,17 @@
                 <version>2.3</version>
                 <scope>provided</scope>
             </dependency>
+
+			<dependency>
+			    <groupId>com.fasterxml.jackson.core</groupId>
+			    <artifactId>jackson-core</artifactId>
+			    <version>${ohadr.fasterxml.jackson.core}</version>
+			</dependency>
+			<dependency>
+			    <groupId>com.fasterxml.jackson.core</groupId>
+			    <artifactId>jackson-databind</artifactId>
+			    <version>${ohadr.fasterxml.jackson.core}</version>
+			</dependency>
 
 
         </dependencies>
