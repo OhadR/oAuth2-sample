@@ -17,7 +17,7 @@
 		<dependency>
 			<groupId>com.ohadr</groupId>
 			<artifactId>common-crypto</artifactId>
-			<version>${project.version}</version>
+			<version>2.1-RELEASE</version>
 		</dependency>
 
 		<dependency>
