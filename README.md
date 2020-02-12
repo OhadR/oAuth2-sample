@@ -12,6 +12,10 @@ On 23-02-2016, we have updated Spring versions to the newest!
 * Spring: 4.2.4.RELEASE
 * Spring Security oAuth: 2.0.9.RELEASE
 
+## 02-2020: Spring Versions Updated
+
+### Spring security 5: PasswordEncoder
+
 ### Spring security and Session Fixation Protection
 
 https://www.baeldung.com/spring-security-session
