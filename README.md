@@ -12,6 +12,21 @@ On 23-02-2016, we have updated Spring versions to the newest!
 * Spring: 4.2.4.RELEASE
 * Spring Security oAuth: 2.0.9.RELEASE
 
+### Spring security and Session Fixation Protection
+
+https://www.baeldung.com/spring-security-session
+https://docs.spring.io/spring-security/site/docs/current/reference/html5/#ns-session-fixation. 
+
+After successful login I hit `NoSuchMethodError: javax.servlet.http.HttpServletRequest.changeSessionId()`. It happens because Spring's session-fixation-protection calls (see stack below) to servlet API to 3.1's `HttpServletRequest.changeSessionId`.
+One option is to upgrade to servlet API to 3.1, but then I will have to upgrade to tomcat-8 (http://tomcat.apache.org/whichversion.html). Thus the components should be deployed on tomcat-8. More simple solution is to disable the session-fixation-protection for this demo.
+
+![noSuchMethodErrorChangeSessionId.jpg](noSuchMethodErrorChangeSessionId.jpg)
+
+![tomcat-versions-supports.jpg](tomcat-versions-supports.jpg)
+
+Trying to migrate tomcat7-maven-plugin to tomcat8-maven-plugin is another story.
+
+
 ## How to Run 1: Deploy all components on the same Tomcat
 
 * Deploy all 3 WARs on a servlet container, e.g. Tomcat.
