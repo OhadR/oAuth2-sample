@@ -35,7 +35,7 @@
     <!-- this statement enables the access to /oauth/token. without it we get "cannot access" -->
     <security:http pattern="/oauth/token"  
         use-expressions="false"
-        authentication-manager-ref="clientAuthenticationManager">
+        authentication-manager-ref="authManager">
         <security:intercept-url pattern="/oauth/token" access="ROLE_CLIENT"/>
         <security:anonymous enabled="false" />
         <security:http-basic />
@@ -49,7 +49,7 @@
 
     <security:http auto-config="true" 
         use-expressions="false"
-        authentication-manager-ref="usersAuthManager">
+        authentication-manager-ref="authManager">
 		<security:intercept-url pattern="/publicKey" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/oauth/**"	access="ROLE_USER" />
 		<security:intercept-url pattern="/**" access="ROLE_ADMIN" />
@@ -60,6 +60,7 @@
 			authentication-success-handler-ref="authenticationSuccessHandler"
 			authentication-failure-url="/login/login.htm?login_error=1" />
 
+    	<security:session-management session-fixation-protection="none" />
 
         <security:anonymous enabled="false"/>
         <security:csrf disabled="true"/>
@@ -76,16 +77,20 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-
-    <security:authentication-manager alias="usersAuthManager">
-        <security:authentication-provider user-service-ref="userDetailsService"/>
-	</security:authentication-manager>
-
+	
     <security:user-service id="userDetailsService">
-				<security:user name="user@ohadr.com" password="uripass" authorities="ROLE_USER" />
-				<security:user name="demo@ohadr.com" password="demo" authorities="ROLE_USER" />
+		<security:user name="user@ohadr.com" password="uripass" authorities="ROLE_USER" />
+		<security:user name="demo@ohadr.com" password="demo" authorities="ROLE_USER" />
     </security:user-service>
 
+ 	<security:authentication-manager alias="authManager">
+        <security:authentication-provider user-service-ref="userDetailsService">
+            <security:password-encoder ref="passwordEncoder" />
+        </security:authentication-provider>
+		<security:authentication-provider user-service-ref="clientDetailsUserService">
+             <security:password-encoder ref="passwordEncoder" />        
+		</security:authentication-provider>
+	</security:authentication-manager>
 
 
 	<!-- example for encoding the passwords; we keep them here encoded. the password is 'ohadr' encoded: >
@@ -105,15 +110,12 @@
 		token-services-ref="myAuthorizationServerTokenServices"
 		user-approval-handler-ref="automaticUserApprovalHandler">
 		<oauth:authorization-code />
-		<oauth:implicit />
+<!-- 		<oauth:implicit />
 		<oauth:refresh-token />
 		<oauth:client-credentials />
 		<oauth:password />
-	</oauth:authorization-server>
+ -->	</oauth:authorization-server>
 
-	<security:authentication-manager id="clientAuthenticationManager">
-		<security:authentication-provider user-service-ref="clientDetailsUserService" />
-	</security:authentication-manager>
 
 	<bean id="clientDetailsUserService"
 		class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
@@ -129,9 +131,6 @@
 	</oauth:client-details-service>
 	
 
-	<bean id="passwordEncoder" 	class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
-		<constructor-arg value="256"/>
-	</bean>
-
+	<bean id="passwordEncoder" 	class="com.ohadr.authentication.crypto.password.NoOpPasswordEncoder" />
 
 </beans>

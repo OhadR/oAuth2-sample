@@ -26,7 +26,6 @@
 
     <mvc:annotation-driven/>
 
-
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix">
             <value>/WEB-INF/pages/</value>
@@ -43,6 +42,8 @@
 		<sec:anonymous/>
 
 		<sec:csrf disabled="true"/>
+
+    	<sec:session-management session-fixation-protection="none" />
 
         <!-- sec:form-login/-->
         
@@ -70,7 +71,9 @@
 
 
     <sec:authentication-manager alias="authenticationManager">
-		<sec:authentication-provider user-service-ref="userDetailsService"/>
+        <sec:authentication-provider user-service-ref="userDetailsService">
+            <sec:password-encoder ref="passwordEncoder" />
+        </sec:authentication-provider>
 	</sec:authentication-manager>
 	
 	<sec:user-service id="userDetailsService">
@@ -124,5 +127,7 @@
 	</bean>
 	
 	<oauth:rest-template id="oauthRestTemplate" resource="butkecResource" />
+	
+	<bean id="passwordEncoder" 	class="com.ohadr.authentication.crypto.password.NoOpPasswordEncoder" />
 	
 </beans>
