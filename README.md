@@ -6,15 +6,23 @@ Each party is represented by its own WAR.
 
 ## 23-02-2016: Spring Versions Updated
 
-On 23-02-2016, we have updated Spring versions to the newest!
+On 23-02-2016, Spring versions were updated:
 
-* Spring Security: 4.0.3.RELEASE
 * Spring: 4.2.4.RELEASE
+* Spring Security: 4.0.3.RELEASE
 * Spring Security oAuth: 2.0.9.RELEASE
 
 ## 02-2020: Spring Versions Updated
 
+On 02-2020, Spring versions were updated:
+
+* Spring: 5.2.3.RELEASE
+* Spring Security: 5.2.2.RELEASE
+* Spring Security oAuth: 2.0.16.RELEASE
+
 ### Spring security 5: PasswordEncoder
+
+Mechanism of password encoder was changed in Spring-Security 5. I had to adjust configuration.
 
 ### Spring security and Session Fixation Protection
 
