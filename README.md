@@ -4,13 +4,13 @@ oAuth2-sample   [![Build Status](https://travis-ci.org/OhadR/oAuth2-sample.svg?b
 This project is a oAuth2 POC, consists of all 3 oAuth parties: the authentication server, a resource server, and a client app.
 Each party is represented by its own WAR.
 
-## 23-02-2016: Spring Versions Updated
+## 01-2025: Spring Versions Updated; Spring-Boot 3
 
-On 23-02-2016, Spring versions were updated:
+    mvn dependency:tree
 
-* Spring: 4.2.4.RELEASE
-* Spring Security: 4.0.3.RELEASE
-* Spring Security oAuth: 2.0.9.RELEASE
+* Spring Boot: 3.4.1
+* Spring: 6.2.1
+* Spring Security: 6.4.2
 
 ## 02-2020: Spring Versions Updated
 
@@ -37,6 +37,15 @@ One option is to upgrade to servlet API to 3.1, but then I will have to upgrade 
 ![tomcat-versions-supports.jpg](tomcat-versions-supports.jpg)
 
 Trying to migrate tomcat7-maven-plugin to tomcat8-maven-plugin is another story.
+
+
+## 23-02-2016: Spring Versions Updated
+
+On 23-02-2016, Spring versions were updated:
+
+* Spring: 4.2.4.RELEASE
+* Spring Security: 4.0.3.RELEASE
+* Spring Security oAuth: 2.0.9.RELEASE
 
 
 ## How to Run 1: Deploy all components on the same Tomcat
