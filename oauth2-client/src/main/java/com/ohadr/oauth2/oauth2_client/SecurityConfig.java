@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -38,10 +39,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
                                                    ClientRegistrationRepository clientRegistrationRepository) throws Exception {
         http
-                .authorizeHttpRequests(authorize ->
-                        authorize
-                                .requestMatchers("/index.html", "/error", "/webjars/**", "/jwks", "/logged-out").permitAll()
-                                .anyRequest().authenticated()
+                .csrf(c -> c
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
+
+                )
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/index.html", "/error", "/webjars/**", "/jwks", "/logout").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .exceptionHandling(e -> e
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
@@ -49,8 +54,8 @@ public class SecurityConfig {
                 .oauth2Login(oauth2Login ->
                         oauth2Login.loginPage("/oauth2/authorization/github"))
                 .oauth2Client(withDefaults())
-//                .logout(logout ->
-//                        logout.logoutSuccessHandler(oidcLogoutSuccessHandler(clientRegistrationRepository)))
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/").permitAll())
         ;
         return http.build();
     }

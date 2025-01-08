@@ -12,6 +12,12 @@ Each party is represented by its own WAR.
 * Spring: 6.2.1
 * Spring Security: 6.4.2
 
+https://spring.io/guides/tutorials/spring-boot-oauth2#_social_login_click
+
+https://stackoverflow.com/questions/74447118/csrf-protection-not-working-with-spring-security-6
+
+https://docs.spring.io/spring-security/reference/servlet/exploits/csrf.html#csrf-integration-javascript
+
 ## 02-2020: Spring Versions Updated
 
 On 02-2020, Spring versions were updated:
