@@ -21,7 +21,7 @@ https://docs.spring.io/spring-security/reference/servlet/exploits/csrf.html#csrf
 ### notes
 
 upon startup, the auth-cli calls the auth-server  /.well-known/openid-configuration, to verify the issuer. 
-if the issuer in the cli (`provider.ohads.issuer-uri`) is different than the server's (authorizationserver.issuer), an error 
+if the issuer in the cli (property `provider.ohads.issuer-uri`) is different than the server's (property `..authorizationserver.issuer`), an error 
 is thrown:
 
     java.lang.IllegalStateException: The Issuer "http://auth-server:9000" provided in the configuration metadata did not match the requested issuer "http://localhost:9000"
@@ -55,6 +55,17 @@ org.springframework.security.oauth2.server.authorization.authentication.OAuth2Au
 
 ```
 
+### How to Run (Spring Boot)
+
+Running these component is different than in older versions. Then, each component was a WAR. But with Spring Boot all components
+are JARs, and each component easily with:
+
+    mvn clean spring-boot:run
+
+Note that the auth-server must be running before the auth-cli, as the cli calls `/.well-known/openid-configuration` (see above)
+
+Browse http://localhost:8080. The user can choose which auth-server he wants to login with: GitHub, Google, or "ohads" which 
+is the local implementation of auth-server with Spring Boot. login with user/password.
 
 
 ## 02-2020: Spring Versions Updated
@@ -93,7 +104,7 @@ On 23-02-2016, Spring versions were updated:
 * Spring Security oAuth: 2.0.9.RELEASE
 
 
-## How to Run 1: Deploy all components on the same Tomcat
+### How to Run 1: Deploy all components on the same Tomcat
 
 * Deploy all 3 WARs on a servlet container, e.g. Tomcat.
 * Browse http://localhost:8080/oauth2-client/hello. The client needs a login by itself: admin/admin (Spring Security expects your client web-app to have its own credentials).
@@ -102,7 +113,7 @@ On 23-02-2016, Spring versions were updated:
 * client should access the resource server using the access-token, and print a message.
 * **NOTE that you will have to change the ports' configurations to 8080 in  oauth2-client/.../client.properties.**
 
-## How to Run 2: tomcat7-maven-plugin
+### How to Run 2: tomcat7-maven-plugin
 
 from command line, use the following command:
     
@@ -118,7 +129,7 @@ each component is configured to use a different port:
 * This will redirect to oauth2.0 authentication server. Login to authentication-server, for simplicity it is in-mem: demo@ohadr.com/demo.
 * client should access the resource server using the access-token, and print a message.
 
-## How to Run 3: debug from eclipse
+### How to Run 3: debug from eclipse
 
 Since each component is configured to use a different port (see above), it is easy to run all 3 components from eclipse. Below is the configuration (note the 3 configs):
 
