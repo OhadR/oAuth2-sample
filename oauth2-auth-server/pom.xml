@@ -15,13 +15,6 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<properties>
-		<warFileName>oauth2-auth-server-${project.version}</warFileName>
-		<publishDirectory>${env.PUBLISH_FOLDER}/</publishDirectory>
-		<m2eclipse.wtp.contextRoot>/oauth2-auth-server</m2eclipse.wtp.contextRoot>
-		<ohadr.project.port>8091</ohadr.project.port>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>com.ohadr.oauth2</groupId>
