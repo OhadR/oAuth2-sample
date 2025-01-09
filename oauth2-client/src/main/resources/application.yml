@@ -1,0 +1,37 @@
+server:
+  port: 8080
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: Ov...IB
+            clientSecret: 081...e27e
+          google:
+            clientId: 956...mr.apps.googleusercontent.com
+            clientSecret: G...YM
+          ohads:
+            provider: ohads
+            clientId: ohadclientid
+            clientSecret: ohadclientsecret
+            client-authentication-method: basic
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/login/oauth2/code/ohads
+            scope: openid, email
+            client-name: UAA
+
+        provider:
+          ohads:
+            issuer-uri: http://localhost:9000
+#            authorization-uri: http://localhost:9000/uaa/oauth/authorize
+#            token-uri: http://localhost:9000/uaa/oauth/token
+            user-info-uri: http://localhost:9000/uaa/userinfo
+            user-name-attribute: sub
+            jwk-set-uri: http://localhost:9000/uaa/token_keys
+
+
+logging:
+  level:
+    org.springframework.security: TRACE

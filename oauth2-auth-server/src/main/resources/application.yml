@@ -1,0 +1,34 @@
+server:
+  port: 9000
+
+spring:
+  security:
+    user:
+      name: user
+      password: password
+    oauth2:
+      authorizationserver:
+        issuer: http://localhost:9000
+        client:
+          articles-client:
+            registration:
+              client-id: ohadclientid
+              client-secret: ohadclientsecret
+              client-name: Articles Client
+              client-authentication-methods:
+                - client_secret_basic
+              authorization-grant-types:
+                - authorization_code
+                - refresh_token
+              redirect-uris:
+                - http://localhost:8080/login/oauth2/code/ohads
+              scopes:
+                - openid
+                - articles.read
+                - email
+
+
+
+logging:
+  level:
+    org.springframework.security: TRACE
