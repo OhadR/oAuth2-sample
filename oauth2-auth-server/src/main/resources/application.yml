@@ -3,14 +3,17 @@ server:
 
 spring:
   security:
+    user:
+      name: user
+      password: password
     oauth2:
       authorizationserver:
-        issuer: http://auth-server:9000
+        issuer: http://localhost:9000
         client:
           articles-client:
             registration:
-              client-id: articles-client
-              client-secret: "{noop}secret"
+              client-id: ohadclientid
+              client-secret: ohadclientsecret
               client-name: Articles Client
               client-authentication-methods:
                 - client_secret_basic
@@ -18,11 +21,11 @@ spring:
                 - authorization_code
                 - refresh_token
               redirect-uris:
-                - http://127.0.0.1:8080/login/oauth2/code/articles-client-oidc
-                - http://127.0.0.1:8080/authorized
+                - http://localhost:8080/login/oauth2/code/ohads
               scopes:
                 - openid
                 - articles.read
+                - email
 
 
 

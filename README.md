@@ -18,6 +18,45 @@ https://stackoverflow.com/questions/74447118/csrf-protection-not-working-with-sp
 
 https://docs.spring.io/spring-security/reference/servlet/exploits/csrf.html#csrf-integration-javascript
 
+### notes
+
+upon startup, the auth-cli calls the auth-server  /.well-known/openid-configuration, to verify the issuer. 
+if the issuer in the cli (`provider.ohads.issuer-uri`) is different than the server's (authorizationserver.issuer), an error 
+is thrown:
+
+    java.lang.IllegalStateException: The Issuer "http://auth-server:9000" provided in the configuration metadata did not match the requested issuer "http://localhost:9000"
+
+the `OidcProviderConfigurationEndpointFilter` handles it.
+
+"To see the OpenID configuration document for an application's common authority, navigate to https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration"
+
+Next, there is a (default) call to GET `/oauth2/authorize?response_type=code&client_id=ohadclientid&...`
+unless the client properties defined otherwise (in `provider.ohads.authorization-uri`).
+
+The `OAuth2AuthorizationEndpointFilter` handles it.
+
+it also checks the client-id in the request. if there is a mismatch, exception is thrown:
+
+```
+2025-01-09T12:01:33.158+02:00 TRACE 8272 --- [nio-9000-exec-2] .s.a.w.OAuth2AuthorizationEndpointFilter : Authorization request failed: [invalid_request] OAuth 2.0 Parameter: client_id
+
+org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationCodeRequestAuthenticationException: OAuth 2.0 Parameter: client_id
+```
+
+The `OAuth2AuthorizationEndpointFilter` has several providers that it activates. For example, the `OAuth2AuthorizationCodeRequestAuthenticationProvider`
+checks the scope that the client requests. Upon mismatch:
+
+```declarative
+2025-01-09T12:16:37.842+02:00 DEBUG 12432 --- [nio-9000-exec-2] zationCodeRequestAuthenticationValidator : Invalid request: requested scope is not allowed for registered client 'articles-client'
+2025-01-09T12:16:37.847+02:00 DEBUG 12432 --- [nio-9000-exec-2] .s.a.DefaultAuthenticationEventPublisher : No event was found for the exception org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationCodeRequestAuthenticationException
+2025-01-09T12:16:37.848+02:00 TRACE 12432 --- [nio-9000-exec-2] .s.a.w.OAuth2AuthorizationEndpointFilter : Authorization request failed: [invalid_scope] OAuth 2.0 Parameter: scope
+
+org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationCodeRequestAuthenticationException: OAuth 2.0 Parameter: scope
+
+```
+
+
+
 ## 02-2020: Spring Versions Updated
 
 On 02-2020, Spring versions were updated:
