@@ -17,19 +17,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.ohadr.oauth2</groupId>
-			<artifactId>auth-common</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.ohadr</groupId>
-			<artifactId>common-crypto</artifactId>
-			<version>2.1-RELEASE</version>
-		</dependency>
-
-
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-authorization-server</artifactId>
 		</dependency>
@@ -38,10 +25,16 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
 
 
 
-	</dependencies>
+
+    </dependencies>
 
 	<build>
 		<plugins>
