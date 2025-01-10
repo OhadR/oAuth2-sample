@@ -18,6 +18,10 @@ https://stackoverflow.com/questions/74447118/csrf-protection-not-working-with-sp
 
 https://docs.spring.io/spring-security/reference/servlet/exploits/csrf.html#csrf-integration-javascript
 
+resource server:
+
+https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html
+
 ### notes
 
 upon startup, the auth-cli calls the auth-server  /.well-known/openid-configuration, to verify the issuer. 
@@ -43,7 +47,7 @@ it also checks the client-id in the request. if there is a mismatch, exception i
 org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationCodeRequestAuthenticationException: OAuth 2.0 Parameter: client_id
 ```
 
-The `OAuth2AuthorizationEndpointFilter` has several providers that it activates. For example, the `OAuth2AuthorizationCodeRequestAuthenticationProvider`
+* The `OAuth2AuthorizationEndpointFilter` has several providers that it activates. For example, the `OAuth2AuthorizationCodeRequestAuthenticationProvider`
 checks the scope that the client requests. Upon mismatch:
 
 ```declarative
@@ -52,7 +56,20 @@ checks the scope that the client requests. Upon mismatch:
 2025-01-09T12:16:37.848+02:00 TRACE 12432 --- [nio-9000-exec-2] .s.a.w.OAuth2AuthorizationEndpointFilter : Authorization request failed: [invalid_scope] OAuth 2.0 Parameter: scope
 
 org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationCodeRequestAuthenticationException: OAuth 2.0 Parameter: scope
+```
 
+* cannot run all parties on localhost, because i get `OAuth2AuthenticationException: [authorization_request_not_found]`:
+
+https://github.com/spring-projects/spring-security/issues/5946
+
+https://stackoverflow.com/questions/50908023/using-spring-security-oauth-using-a-custom-oauth-provider-i-get-authorization
+
+
+* in the oauth-server, the property `client-secret: "{noop}ohadclientsecret"`is not secured, but the prefix is a must o/w spring
+throws error:
+```
+Given that there is no default password encoder configured, each password must have a password encoding prefix. Please 
+either prefix this password with '{noop}' or set a default password encoder in `DelegatingPasswordEncoder`
 ```
 
 ### How to Run (Spring Boot)
@@ -182,3 +199,81 @@ http://techie-experience.blogspot.co.il/2012/10/encryption-and-decryption-using-
 http://docs.oracle.com/javase/7/docs/api/javax/crypto/Cipher.html#init(int, java.security.Key)
 
 
+## Authentication-server Security Filters:
+
+```
+DisableEncodeUrlFilter (1/29)
+WebAsyncManagerIntegrationFilter (2/29)
+SecurityContextHolderFilter (3/29)
+AuthorizationServerContextFilter (4/29)
+HeaderWriterFilter (5/29)
+CsrfFilter (6/29)
+OidcLogoutEndpointFilter (7/29)
+LogoutFilter (8/29)
+OAuth2AuthorizationServerMetadataEndpointFilter (9/29)
+OAuth2AuthorizationEndpointFilter (10/29) ****> responds to GET /oauth2/authorize. 20 more filters: OAuth2AuthorizationCodeRequestAuthenticationProvider and more...
+OAuth2DeviceVerificationEndpointFilter (11/29)
+OidcProviderConfigurationEndpointFilter (12/29) ---> responds to /.well-known/openid-configuration
+NimbusJwkSetEndpointFilter (13/29)              ---> responds to GET /oauth2/jwks
+OAuth2ClientAuthenticationFilter (14/29)  ****> responds to POST /oauth2/token. 20 more filters: JwtClientAssertionAuthenticationProvider, X509ClientCertificateAuthenticationProvider, ClientSecretAuthenticationProvider and more
+UsernamePasswordAuthenticationFilter (15/29)
+DefaultResourcesFilter (16/29)
+DefaultLoginPageGeneratingFilter (17/29)        --> generates the login page
+DefaultLogoutPageGeneratingFilter (18/29)
+BearerTokenAuthenticationFilter (19/29)         ... JwtAuthenticationProvider
+RequestCacheAwareFilter (20/29)
+SecurityContextHolderAwareRequestFilter (21/29)
+AnonymousAuthenticationFilter (22/29)
+ExceptionTranslationFilter (23/29)
+AuthorizationFilter (24/29)
+OAuth2TokenEndpointFilter (25/29) (authorizing POST /oauth2/token. Authenticating request with OAuth2AuthorizationCodeAuthenticationProvider)
+...
+OidcUserInfoEndpointFilter (29/29)              ---> responds to GET /userinfo
+
+```
+
+
+## Resource-Server Security Filters:
+
+
+```
+DisableEncodeUrlFilter (1/16)
+WebAsyncManagerIntegrationFilter (2/16)
+SecurityContextHolderFilter (3/16)
+HeaderWriterFilter (4/16)
+CsrfFilter (5/16)
+LogoutFilter (6/16)
+UsernamePasswordAuthenticationFilter (7/16)
+DefaultResourcesFilter (8/16)
+DefaultLoginPageGeneratingFilter (9/16) --> generates login page upon `/login` call
+DefaultLogoutPageGeneratingFilter (10/16)
+BasicAuthenticationFilter (11/16)
+RequestCacheAwareFilter (12/16)
+SecurityContextHolderAwareRequestFilter (13/16)
+AnonymousAuthenticationFilter (14/16)
+ExceptionTranslationFilter (15/16)
+AuthorizationFilter (16/16)
+```
+
+## oAuth-client filters
+
+```
+... same as all ...
+OAuth2AuthorizationRequestRedirectFilter (7/15) --> responds to GET oauth2/authorization/<id> /and redirects to auth-server/oauth2/authorize?...
+OAuth2AuthorizationRequestRedirectFilter (8/15 another one!! )
+OAuth2LoginAuthenticationFilter (9/15) --> responds to GET /login/oauth2/code/ohads?..., and runs another chain:
+```
+
+the chain of OAuth2LoginAuthenticationFilter:
+OAuth2LoginAuthenticationProvider
+OidcAuthorizationCodeAuthenticationProvider
+
+
+### `OAuth2AuthorizationCodeAuthenticationProvider`
+
+retrieves registered client;
+retrieves authorization with authorization code
+validates token request params
+generates access token
+generates refresh token
+save authorization

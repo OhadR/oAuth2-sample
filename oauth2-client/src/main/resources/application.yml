@@ -13,23 +13,23 @@ spring:
             clientId: 956...mr.apps.googleusercontent.com
             clientSecret: G...YM
           ohads:
-            provider: ohads
+            provider: ohads-provider
             clientId: ohadclientid
             clientSecret: ohadclientsecret
-            client-authentication-method: basic
+#            client-authentication-method: client_secret_basic
             authorization-grant-type: authorization_code
             redirect-uri: http://localhost:8080/login/oauth2/code/ohads
             scope: openid, email
             client-name: UAA
 
         provider:
-          ohads:
-            issuer-uri: http://localhost:9000
-#            authorization-uri: http://localhost:9000/uaa/oauth/authorize
-#            token-uri: http://localhost:9000/uaa/oauth/token
-            user-info-uri: http://localhost:9000/uaa/userinfo
+          ohads-provider:
+            issuer-uri: http://auth-server:9000
+            #            authorization-uri: http://auth-server:9000/uaa/oauth/authorize
+            #            token-uri: http://auth-server:9000/uaa/oauth/token
+#            user-info-uri: http://auth-server:9000/uaa/userinfo
             user-name-attribute: sub
-            jwk-set-uri: http://localhost:9000/uaa/token_keys
+#            jwk-set-uri: http://auth-server:9000/uaa/token_keys
 
 
 logging:
