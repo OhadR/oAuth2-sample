@@ -42,7 +42,7 @@
 
     <properties>
         <ohadr.spring.version>5.2.3.RELEASE</ohadr.spring.version>
-        <ohadr.spring.security.version>5.2.2.RELEASE</ohadr.spring.security.version>
+        <ohadr.spring.security.version>5.7.14</ohadr.spring.security.version>
         <ohadr.spring-security-oauth.version>2.0.16.RELEASE</ohadr.spring-security-oauth.version>
         <ohadr.fasterxml.jackson.core>2.9.10</ohadr.fasterxml.jackson.core>
     </properties>
