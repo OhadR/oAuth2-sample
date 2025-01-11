@@ -1,4 +1,4 @@
-package com.ohadr.oauth2.oauth2_client;
+package com.ohadr.oauth2.oauth2_client.config;
 
 
 import jakarta.servlet.http.HttpServletRequest;

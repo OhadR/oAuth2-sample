@@ -34,11 +34,18 @@
           $(".authenticated").show()
         });
 
-        const logout = function() {
+        function logout() {
             $.post("/logout", function() {
                 $("#user").html('');
                 $(".unauthenticated").show();
                 $(".authenticated").hide();
+            })
+            return true;
+        }
+
+        function callResourceServer() {
+            $.get("/getMessageFromResourceServer", function() {
+                $("#user").html('');
             })
             return true;
         }
@@ -63,6 +70,10 @@
         <div>
             <button onClick="logout()" class="btn btn-primary">Logout</button>
         </div>
+    </div>
+    <div>
+        POST to oAuth2-resource-server (authenticates With Ohads' auth-server):
+        <button onClick="callResourceServer()" class="btn btn-primary">post to ResourceServer</button>
     </div>
 </body>
 </html>

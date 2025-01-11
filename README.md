@@ -18,13 +18,16 @@ https://stackoverflow.com/questions/74447118/csrf-protection-not-working-with-sp
 
 https://docs.spring.io/spring-security/reference/servlet/exploits/csrf.html#csrf-integration-javascript
 
+https://docs.spring.io/spring-security/reference/servlet/oauth2/client/authorization-grants.html
+
 resource server:
 
 https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html
 
 ### notes
 
-upon startup, the auth-cli calls the auth-server  /.well-known/openid-configuration, to verify the issuer. 
+upon startup, the auth-cli calls the auth-server  /.well-known/openid-configuration, to verify the issuer.
+(same for resource-server).
 if the issuer in the cli (property `provider.ohads.issuer-uri`) is different than the server's (property `..authorizationserver.issuer`), an error 
 is thrown:
 
@@ -259,12 +262,12 @@ AuthorizationFilter (16/16)
 
 ```
 ... same as all ...
-OAuth2AuthorizationRequestRedirectFilter (7/15) --> responds to GET oauth2/authorization/<id> /and redirects to auth-server/oauth2/authorize?...
+OAuth2AuthorizationRequestRedirectFilter (7/15) --> responds to GET oauth2/authorization/{registrationId} /and redirects to auth-server/oauth2/authorize?...
 OAuth2AuthorizationRequestRedirectFilter (8/15 another one!! )
 OAuth2LoginAuthenticationFilter (9/15) --> responds to GET /login/oauth2/code/ohads?..., and runs another chain:
 ```
 
-the chain of OAuth2LoginAuthenticationFilter:
+the chain of `OAuth2LoginAuthenticationFilter`:
 OAuth2LoginAuthenticationProvider
 OidcAuthorizationCodeAuthenticationProvider
 
