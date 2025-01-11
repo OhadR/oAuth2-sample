@@ -1,11 +1,6 @@
 package com.ohadr.oauth.resource_server.mvc;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
-import java.util.Map;
 
 @RestController
 public class HelloController
@@ -15,16 +10,18 @@ public class HelloController
 //    @ResponseBody
 //    public String printWelcome() {
 //
-////        model.addAttribute("message", "Spring Security Hello World");
+/// /        model.addAttribute("message", "Spring Security Hello World");
 //        return "hello from resource server";
 //
 //    }
 
     @GetMapping("/messages")
-    public Map<String, Object> messages() {
+    public Message[] messages() {
         System.out.println("************************************");
-        return Collections.singletonMap("name", "login");
+        return new Message[]{new Message("ohad is the king!!!")};
     }
 
+    public record Message(String message) {
+    }
 
 }

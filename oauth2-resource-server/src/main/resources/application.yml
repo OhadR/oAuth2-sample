@@ -3,13 +3,10 @@ server:
 
 spring:
   security:
-    user:
-      name: user
-      password: password
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9000/issuer
+          issuer-uri: http://auth-server:9000
 #          jwk-set-uri: http://localhost:9000/.well-known/jwks.json
 
 logging:
