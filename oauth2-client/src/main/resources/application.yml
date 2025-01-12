@@ -18,9 +18,9 @@ spring:
             clientSecret: ohadclientsecret
 #            client-authentication-method: client_secret_basic
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8080/login/oauth2/code/ohads
             scope: openid, email
             client-name: UAA
+#            redirect-uri: "{baseUrl}/login/oauth2/code/ohads"
 
         provider:
           ohads-provider:

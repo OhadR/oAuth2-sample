@@ -27,7 +27,7 @@ public class SecurityConfig {
 
                 )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/index.html", "/error", "/webjars/**", "/jwks", "/logout").permitAll()
+                        .requestMatchers("/index.html", "/error", "/webjars/**", "/jwks", "/logout", "/getMessageFromResourceServer").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(e -> e
