@@ -87,6 +87,12 @@ Note that the auth-server must be running before the auth-cli, as the cli calls 
 Browse http://localhost:8080. The user can choose which auth-server he wants to login with: GitHub, Google, or "ohads" which 
 is the local implementation of auth-server with Spring Boot. login with user/password.
 
+### How to debug from IntelliJ
+
+https://stackoverflow.com/questions/75483956/debug-spring-boot-3-in-intellij-community
+
+in the terminal: `mvn spring-boot:run -f .\pom.xml`
+
 
 ## 02-2020: Spring Versions Updated
 
