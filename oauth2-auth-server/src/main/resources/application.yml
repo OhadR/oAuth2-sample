@@ -8,12 +8,12 @@ spring:
       password: password
     oauth2:
       authorizationserver:
-        issuer: http://localhost:9000
+        issuer: http://auth-server:9000
         client:
           articles-client:
             registration:
               client-id: ohadclientid
-              client-secret: ohadclientsecret
+              client-secret: "{noop}ohadclientsecret"
               client-name: Articles Client
               client-authentication-methods:
                 - client_secret_basic

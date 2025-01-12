@@ -1,22 +1,27 @@
 package com.ohadr.oauth.resource_server.mvc;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("/welcome")
+@RestController
 public class HelloController
 {
 
-    @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
-    public String printWelcome() {
+//    @RequestMapping(method = RequestMethod.GET)
+//    @ResponseBody
+//    public String printWelcome() {
+//
+/// /        model.addAttribute("message", "Spring Security Hello World");
+//        return "hello from resource server";
+//
+//    }
 
-//        model.addAttribute("message", "Spring Security Hello World");
-        return "hello from resource server";
+    @GetMapping("/messages")
+    public Message[] messages() {
+        System.out.println("************************************");
+        return new Message[]{new Message("ohad is the king!!!")};
+    }
 
+    public record Message(String message) {
     }
 
 }
