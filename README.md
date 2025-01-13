@@ -166,11 +166,9 @@ for more info, See this README: https://gitlab.com/OhadR/activemq-spring-sandbox
 
 
 
-Project Components
-==================
 
-JAR: auth-common
-------------
+# JAR: auth-common
+
 common code for authentication.  You can find it also in this project,
 and also it is available in Maven repository:
 
@@ -196,19 +194,21 @@ creating a token using Java's keytool:
 keytool.exe -genkeypair -alias <alias> -keypass <key-password> -keyalg DSA -keystore <file-name> -storepass <ks-password> -storetype JCEKS -v
 
 
-Java Encryption:
-================
+## Java Encryption:
+
+```
 Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");  
 SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
 cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 String encryptedString = Base64.encodeBase64String(cipher.doFinal(strToEncrypt.getBytes()));
 return encryptedString;
-
+```
 http://techie-experience.blogspot.co.il/2012/10/encryption-and-decryption-using-aes.html
 http://docs.oracle.com/javase/7/docs/api/javax/crypto/Cipher.html#init(int, java.security.Key)
 
+# oAuth , Spring 6
 
-## Authentication-server Security Filters:
+## Authentication-Server Security Filters
 
 ```
 DisableEncodeUrlFilter (1/29)
@@ -236,13 +236,15 @@ AnonymousAuthenticationFilter (22/29)
 ExceptionTranslationFilter (23/29)
 AuthorizationFilter (24/29)
 OAuth2TokenEndpointFilter (25/29) (authorizing POST /oauth2/token. Authenticating request with OAuth2AuthorizationCodeAuthenticationProvider)
-...
+OAuth2TokenIntrospectionEndpointFilter (26/29)
+OAuth2TokenRevocationEndpointFilter (27/29)
+OAuth2DeviceAuthorizationEndpointFilter (28/29)
 OidcUserInfoEndpointFilter (29/29)              ---> responds to GET /userinfo
 
 ```
 
 
-## Resource-Server Security Filters:
+## Resource-Server Security Filters
 
 
 ```
@@ -286,3 +288,30 @@ validates token request params
 generates access token
 generates refresh token
 save authorization
+
+
+## The Flow: calls to oauth-server
+
+* upon startup of the client, the client calls:
+
+`GET /.well-known/openid-configuration`. (managed by `OidcProviderConfigurationEndpointFilter`).
+
+* on "clean" env, when the client starts the login flow, the client first calls:
+`GET /oauth2/authorize`. in the logs we see "login success for user: anonymousUser" and `AuthorizationFilter` throws Access 
+Denied. This triggers the login flow.
+* then there is a call `GET /login` (`DefaultLoginPageGeneratingFilter`)
+* then the user (resource owner) enters his details and submit, so there is a call `POST /login` (`UsernamePasswordAuthenticationFilter`)
+* then there is a call again to `GET /oauth2/authorize` and this time `OAuth2AuthorizationEndpointFilter` approves. It 
+redirects to the **redirect-uri**.
+* then, the client calls to `POST /oauth2/token`. (`OAuth2ClientAuthenticationFilter`).
+* i see another call then to `GET /oauth2/jwks`. (handled by `NimbusJwkSetEndpointFilter`).
+* and last, a call to `GET /userinfo`. (handled by the last filter in the chain, `OidcUserInfoEndpointFilter`)
+
+## Spring's default consent screen
+
+note: in auth-server yaml file, set: 
+
+    require-authorization-consent: true
+
+
+![default-consent-screen.jpg](default-consent-screen.jpg)
