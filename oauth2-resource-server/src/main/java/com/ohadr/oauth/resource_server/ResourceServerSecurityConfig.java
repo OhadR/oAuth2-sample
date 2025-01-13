@@ -15,28 +15,13 @@ import static org.springframework.security.oauth2.core.authorization.OAuth2Autho
 @Configuration(proxyBeanMethods = false)
 public class ResourceServerSecurityConfig {
 
-    //The above requires the scope of message:read for any URL that starts with /messages/.
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeHttpRequests(authorize -> authorize
-//                        .requestMatchers("/messages/**").access(hasScope("message:read"))
-//                        .anyRequest().authenticated()
-//                )
-//                .oauth2ResourceServer(oauth2 -> oauth2
-//                        .jwt(jwt -> jwt
-//                                .jwkSetUri("http://localhost:9000/.well-known/jwks.json")
-//                        ))
-////                .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
-//
-//        ;
-//        return http.build();
-//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((authorize) -> authorize
+                //The above requires the scope of message:read for any URL that starts with /messages/.
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/messages/**").access(hasScope("message:read"))
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer((oauth2) -> oauth2

@@ -22,11 +22,13 @@ spring:
                 - refresh_token
               redirect-uris:
                 - http://localhost:8080/login/oauth2/code/ohads
+                - http://localhost:8080/authorized
               scopes:
                 - openid
-                - articles.read
-                - email
-
+                - profile
+                - message:read
+                - message:write
+            require-authorization-consent: true
 
 
 logging:
