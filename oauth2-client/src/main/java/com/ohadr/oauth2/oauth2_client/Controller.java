@@ -14,6 +14,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+//import static org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction.clientRegistrationId;
+
 @RestController
 public class Controller {
 
@@ -50,6 +52,9 @@ public class Controller {
 
         Message[] messages = this.restClient.get()
                 .uri("http://localhost:8090/messages")
+                //we do not need to tell Spring Security about the clientRegistrationId we’d like to use.
+                // This is because it can be derived from the currently logged in user (see examples):
+                //.attributes(clientRegistrationId("my-oauth2-client"))
                 .retrieve()
                 .body(Message[].class);
         return ResponseEntity.ok(Arrays.asList(messages));

@@ -16,7 +16,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration(proxyBeanMethods = false)
 public class SecurityConfig {
 
-    // @formatter:off
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
                                                    ClientRegistrationRepository clientRegistrationRepository) throws Exception {
@@ -27,20 +26,19 @@ public class SecurityConfig {
 
                 )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/index.html", "/error", "/webjars/**", "/jwks", "/logout", "/getMessageFromResourceServer").permitAll()
+                        .requestMatchers("/index.html", "/error", "/webjars/**", "/jwks", "/logout").permitAll()
                         .anyRequest().authenticated()
                 )
-                .exceptionHandling(e -> e
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                )
+//                .exceptionHandling(e -> e
+//                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+//                )
                 .oauth2Login(withDefaults())        // to log users in using OAuth 2.0 or OpenID Connect 1.0
-                .oauth2Client(withDefaults())       //  to use RestClient to obtain an access token for users in order to access a third-party API
+//                .oauth2Client(withDefaults())       //  to use RestClient to obtain an access token for users in order to access a third-party API
                 .logout(logout -> logout
                         .logoutSuccessUrl("/").permitAll())
         ;
         return http.build();
     }
-    // @formatter:on
 
 //    private LogoutSuccessHandler oidcLogoutSuccessHandler(
 //            ClientRegistrationRepository clientRegistrationRepository) {
