@@ -20,6 +20,8 @@ https://docs.spring.io/spring-security/reference/servlet/exploits/csrf.html#csrf
 
 https://docs.spring.io/spring-security/reference/servlet/oauth2/client/authorization-grants.html
 
+https://www.baeldung.com/spring-security-oauth-auth-server
+
 resource server:
 
 https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html
