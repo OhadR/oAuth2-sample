@@ -22,6 +22,8 @@ https://docs.spring.io/spring-security/reference/servlet/oauth2/client/authoriza
 
 https://www.baeldung.com/spring-security-oauth-auth-server
 
+https://spring.io/blog/2024/10/28/restclient-support-for-oauth2-in-spring-security-6-4
+
 resource server:
 
 https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html

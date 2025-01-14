@@ -3,8 +3,6 @@ package com.ohadr.oauth2.oauth2_client;
 import org.apache.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,15 +34,12 @@ public class Controller {
     }
 
     @PostMapping("/callResourceServer")
-    public ResponseEntity<List<Message>> getMessagesFromResourceServer(
-            @RegisteredOAuth2AuthorizedClient("ohads") OAuth2AuthorizedClient authorizedClient
-    ) {
+    public ResponseEntity<List<Message>> getMessagesFromResourceServer() {
         System.out.println("calling resource server...");
         log.info("calling resource server...");
 
         Message[] messages = this.restClient.get()
 				.uri("http://localhost:8090/messages")
-//                .attributes(oauth2AuthorizedClient(authorizedClient))
                 .retrieve()
                 .body(Message[].class);
         return ResponseEntity.ok(Arrays.asList(messages));
