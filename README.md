@@ -319,3 +319,7 @@ note: in auth-server yaml file, set:
 
 
 ![default-consent-screen.jpg](default-consent-screen.jpg)
+
+### oauth APIs
+
+![oauthapis.jpg](oauthapis.jpg)
