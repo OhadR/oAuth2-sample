@@ -23,6 +23,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
 
+    // filter chain to apply the default OAuth security and generate a default form login page:
     @Bean
     @Order(1)
     SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -32,6 +33,7 @@ public class SecurityConfig {
         return http.formLogin(withDefaults()).build();
     }
 
+    // filter chain for authentication:
     @Bean
     @Order(2)
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {

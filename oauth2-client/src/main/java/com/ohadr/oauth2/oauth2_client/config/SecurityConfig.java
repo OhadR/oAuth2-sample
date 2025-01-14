@@ -32,7 +32,11 @@ public class SecurityConfig {
 //                .exceptionHandling(e -> e
 //                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
 //                )
-                .oauth2Login(withDefaults())        // to log users in using OAuth 2.0 or OpenID Connect 1.0
+                // to log users in using OAuth 2.0 or OpenID Connect 1.0:
+//                .oauth2Login(withDefaults())
+                .oauth2Login(oauth2Login ->
+                        oauth2Login.loginPage("/oauth2/authorization/ohads"))
+
 //                .oauth2Client(withDefaults())       //  to use RestClient to obtain an access token for users in order to access a third-party API
                 .logout(logout -> logout
                         .logoutSuccessUrl("/").permitAll())
