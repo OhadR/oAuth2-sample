@@ -323,3 +323,6 @@ note: in auth-server yaml file, set:
 ### oauth APIs
 
 ![oauthapis.jpg](oauthapis.jpg)
+
+
+
