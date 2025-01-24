@@ -1,4 +1,4 @@
-oAuth2-sample   [![Build Status](https://travis-ci.org/OhadR/oAuth2-sample.svg?branch=master)](https://travis-ci.org/OhadR/oAuth2-sample)
+oAuth2-sample   [![Build Status](https://github.com/OhadR/oAuth2-sample/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/OhadR/oAuth2-sample/actions/workflows/maven.yml?query=branch%3Amaster)
 =============
 
 This project is a oAuth2 POC, consists of all 3 oAuth parties: the authentication server, a resource server, and a client app.
@@ -323,6 +323,3 @@ note: in auth-server yaml file, set:
 ### oauth APIs
 
 ![oauthapis.jpg](oauthapis.jpg)
-
-
-
