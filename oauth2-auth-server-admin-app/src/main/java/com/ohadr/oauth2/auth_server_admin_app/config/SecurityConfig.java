@@ -5,10 +5,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtDecoders;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.jdbc.core.*;
 
@@ -23,16 +27,29 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                //The above requires the scope of message:read for any URL that starts with /messages/.
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/messages/**").access(hasScope("message:read"))
+                .csrf().disable()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/clients/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-                // Form login handles the redirect to the login page from the
-                // authorization server filter chain
-                .formLogin(withDefaults());
+                .formLogin(withDefaults())
+                .logout(logout -> logout
+                        .permitAll()
+                );
 
         return http.build();
+    }
+
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails admin = User.withDefaultPasswordEncoder()
+                .username("admin")
+                .password("password")
+                .roles("ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager(admin);   //TODO use JDBC
     }
 
     @Bean

@@ -6,81 +6,40 @@
   <title>Client Management</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; }
-    .hidden { display: none; }
     form { margin-bottom: 20px; }
     label { display: block; margin: 5px 0; }
-    input[type="text"], input[type="password"] { width: 100%; padding: 8px; margin: 5px 0; }
+    input[type="text"] { width: 100%; padding: 8px; margin: 5px 0; }
     button { padding: 10px 20px; }
     #result { margin-top: 20px; }
   </style>
 </head>
 <body>
-<h1>Admin Login</h1>
-<form id="login-form">
-  <label for="username">Username:</label>
-  <input type="text" id="username" required>
+<h1>Client Management</h1>
 
-  <label for="password">Password:</label>
-  <input type="password" id="password" required>
-
-  <button type="submit">Login</button>
+<h3>Get Client</h3>
+<form id="get-client-form">
+  <label for="clientId">Client ID:</label>
+  <input type="text" id="clientId" required>
+  <button type="submit">Fetch Client</button>
 </form>
 
-<div id="client-ui" class="hidden">
-  <h2>Client Management</h2>
+<h3>Register New Client</h3>
+<form id="create-client-form">
+  <label for="clientName">Client Name:</label>
+  <input type="text" id="clientName" required>
 
-  <h3>Get Client</h3>
-  <form id="get-client-form">
-    <label for="clientId">Client ID:</label>
-    <input type="text" id="clientId" required>
-    <button type="submit">Fetch Client</button>
-  </form>
+  <label for="redirectUri">redirect uri:</label>
+  <input type="text" id="redirectUri" required>
 
-  <h3>Register New Client</h3>
-  <form id="create-client-form">
-    <label for="newClientId">Client ID:</label>
-    <input type="text" id="newClientId" required>
+  <button type="submit">Register Client</button>
+</form>
 
-    <label for="clientName">Client Name:</label>
-    <input type="text" id="clientName" required>
-
-    <button type="submit">Register Client</button>
-  </form>
-
-  <div id="result"></div>
-</div>
+<div id="result"></div>
 
 <script>
-  const loginForm = document.getElementById('login-form');
-  const clientUI = document.getElementById('client-ui');
   const getClientForm = document.getElementById('get-client-form');
   const createClientForm = document.getElementById('create-client-form');
   const resultDiv = document.getElementById('result');
-
-  loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-
-    try {
-      const response = await fetch('/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-      });
-
-      if (response.ok) {
-        loginForm.classList.add('hidden');
-        clientUI.classList.remove('hidden');
-      } else {
-        alert('Login failed. Please check your credentials.');
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-      alert('An error occurred during login.');
-    }
-  });
 
   getClientForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -88,11 +47,16 @@
 
     try {
       const response = await fetch(`/clients/${clientId}`, {
-        method: 'GET'
+        method: 'GET',
+        credentials: 'include'
       });
 
-      const data = await response.json();
-      resultDiv.innerText = JSON.stringify(data, null, 2);
+      if (response.ok) {
+        const data = await response.json();
+        resultDiv.innerText = JSON.stringify(data, null, 2);
+      } else {
+        resultDiv.innerText = 'Error fetching client data.';
+      }
     } catch (error) {
       console.error('Fetch error:', error);
       resultDiv.innerText = 'Error fetching client data.';
@@ -101,18 +65,24 @@
 
   createClientForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const clientId = document.getElementById('newClientId').value;
+    const redirectUri = document.getElementById('redirectUri').value;
     const clientName = document.getElementById('clientName').value;
 
     try {
       const response = await fetch('/clients', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ clientId, clientName })
+        credentials: 'include',
+        body: JSON.stringify({ redirectUri, clientName })
       });
 
-      const data = await response.json();
-      resultDiv.innerText = 'Client registered successfully:\n' + JSON.stringify(data, null, 2);
+      console.log(response);
+      if (response.ok) {
+        const data = await response.json();
+        resultDiv.innerText = 'Client registered successfully:\n' + JSON.stringify(data, null, 2);
+      } else {
+        resultDiv.innerText = 'Error registering client.';
+      }
     } catch (error) {
       console.error('Registration error:', error);
       resultDiv.innerText = 'Error registering client.';

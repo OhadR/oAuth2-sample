@@ -7,11 +7,6 @@ spring:
     username: test
     password: test_pass
 
-  security:
-    user:
-      name: user
-      password: password
-
 logging:
   level:
     org.springframework.security: TRACE

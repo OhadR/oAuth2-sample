@@ -3,6 +3,7 @@ package com.ohadr.oauth2.auth_server_admin_app.web;
 import java.util.UUID;
 import java.time.Duration;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 
 import org.springframework.http.ResponseEntity;
@@ -28,12 +29,20 @@ public class ClientController {
 
     @PostMapping
     public ResponseEntity<?> registerClient(@RequestBody ClientRegistrationRequest request) {
-        RegisteredClient client = RegisteredClient.withId(UUID.randomUUID().toString())
-                .clientId(request.getClientId())
-                .clientSecret(new BCryptPasswordEncoder().encode(request.getClientSecret()))
+        log.debug("********** registerClient() ***********");
+        log.debug(request.getClientId() + " ... " + request.getClientSecret());
+        String generatedString = RandomStringUtils.randomAlphanumeric(10);
+        log.debug(generatedString);
+
+        String clientSecret = UUID.randomUUID().toString();
+
+        RegisteredClient client = RegisteredClient.withId(clientSecret)
+                .clientName(request.getClientName())
+                .clientId(generatedString)
+                .clientSecret(new BCryptPasswordEncoder().encode(clientSecret))
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-                .redirectUri(request.getRedirectUri())
+                .redirectUri("request.getRedirectUri()")
                 .scope("read")
                 .scope("write")
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
