@@ -3,6 +3,7 @@ package com.ohadr.oauth2.auth_server_admin_app.web;
 public class ClientRegistrationRequest {
     private String clientId;
     private String clientSecret;
+    private String clientName;
     private String redirectUri;
 
     // Constructors
@@ -37,5 +38,13 @@ public class ClientRegistrationRequest {
 
     public void setRedirectUri(String redirectUri) {
         this.redirectUri = redirectUri;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
     }
 }

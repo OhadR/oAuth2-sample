@@ -30,19 +30,19 @@ public class ClientController {
     @PostMapping
     public ResponseEntity<?> registerClient(@RequestBody ClientRegistrationRequest request) {
         log.debug("********** registerClient() ***********");
-        log.debug(request.getClientId() + " ... " + request.getClientSecret());
+        log.debug(request.getClientId() + " ... " + request.getRedirectUri());
         String generatedString = RandomStringUtils.randomAlphanumeric(10);
         log.debug(generatedString);
 
         String clientSecret = UUID.randomUUID().toString();
 
         RegisteredClient client = RegisteredClient.withId(clientSecret)
-                .clientName(request.getClientName())
                 .clientId(generatedString)
                 .clientSecret(new BCryptPasswordEncoder().encode(clientSecret))
+                .clientName(request.getClientName())
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-                .redirectUri("request.getRedirectUri()")
+                .redirectUri(request.getRedirectUri())
                 .scope("read")
                 .scope("write")
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
@@ -50,7 +50,7 @@ public class ClientController {
                 .build();
 
         clientRepository.save(client);
-        return ResponseEntity.ok("Client registered successfully");
+        return ResponseEntity.ok(client);
     }
 
     @GetMapping("/{clientId}")
