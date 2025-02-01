@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Management</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    form { margin-bottom: 20px; }
+    label { display: block; margin: 5px 0; }
+    input[type="text"] { width: 100%; padding: 8px; margin: 5px 0; }
+    button { padding: 10px 20px; }
+    #result { margin-top: 20px; }
+  </style>
+</head>
+<body>
+<h1>Client Management</h1>
+
+<h3>Get Client</h3>
+<form id="get-client-form">
+  <label for="clientId">Client ID:</label>
+  <input type="text" id="clientId" required>
+  <button type="submit">Fetch Client</button>
+</form>
+
+<h3>Register New Client</h3>
+<form id="create-client-form">
+  <label for="clientName">Client Name:</label>
+  <input type="text" id="clientName" required>
+
+  <label for="redirectUri">redirect uri:</label>
+  <input type="text" id="redirectUri" required>
+
+  <button type="submit">Register Client</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+  const getClientForm = document.getElementById('get-client-form');
+  const createClientForm = document.getElementById('create-client-form');
+  const resultDiv = document.getElementById('result');
+
+  getClientForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const clientId = document.getElementById('clientId').value;
+
+    try {
+      const response = await fetch(`/clients/${clientId}`, {
+        method: 'GET',
+        credentials: 'include'
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        resultDiv.innerText = JSON.stringify(data, null, 2);
+      } else {
+        resultDiv.innerText = 'Error fetching client data.';
+      }
+    } catch (error) {
+      console.error('Fetch error:', error);
+      resultDiv.innerText = 'Error fetching client data.';
+    }
+  });
+
+  createClientForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const redirectUri = document.getElementById('redirectUri').value;
+    const clientName = document.getElementById('clientName').value;
+
+    try {
+      const response = await fetch('/clients', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ redirectUri, clientName })
+      });
+
+      console.log(response);
+      if (response.ok) {
+        const data = await response.json();
+        resultDiv.innerText = 'Client registered successfully:\n' + JSON.stringify(data, null, 2);
+      } else {
+        resultDiv.innerText = 'Error registering client.';
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      resultDiv.innerText = 'Error registering client.';
+    }
+  });
+</script>
+</body>
+</html>

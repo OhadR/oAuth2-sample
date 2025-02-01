@@ -1,0 +1,15 @@
+services:
+
+  ### Mysql container
+  mysql:
+    image: mysql/mysql-server:latest
+    ports:
+      - "3306:3306"
+    volumes:
+      - /var/lib/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test_pass
+      MYSQL_ROOT_HOST: '%'  # needs to be enclosed with quotes

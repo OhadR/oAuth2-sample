@@ -1,0 +1,12 @@
+server:
+  port: 9001
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/test_db
+    username: test
+    password: test_pass
+
+logging:
+  level:
+    org.springframework.security: TRACE
