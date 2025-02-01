@@ -48,6 +48,7 @@ public class ClientController {
     public ResponseEntity<?> getClient(@PathVariable String clientId) {
         log.info("***************************");
         RegisteredClient client = clientRepository.findByClientId(clientId);
+        log.debug("getClient(): " + client);
         return client != null ? ResponseEntity.ok(client) : ResponseEntity.notFound().build();
     }
 }

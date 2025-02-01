@@ -10,3 +10,8 @@ Starting a MySQL instance is simple:
 Or use docker-compose:
 
     docker-compose -f docker-compose.yml up -d
+
+the schema of can be found here:
+
+    spring-security-oauth2-authorization-server-1.4.1.jar
+    org/springframework/security/oauth2/server/authorization/client/oauth2-registered-client-schema.sql
