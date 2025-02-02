@@ -24,6 +24,13 @@ the schema of can be found here:
     spring-security-oauth2-authorization-server-1.4.1.jar
     org/springframework/security/oauth2/server/authorization/client/oauth2-registered-client-schema.sql
 
+## users-schema
+
+Spring Security itself doesn’t provide a built-in SQL schema for storing users and passwords like it does for OAuth2 
+client credentials. However, the typical way to store users in a database is by creating a schema that aligns with 
+Spring Security’s JdbcUserDetailsManager, which expects a table structure similar to:
+
+    oauth2-auth-server/src/main/resources/users-schema.sql
 
 # TODO
 
