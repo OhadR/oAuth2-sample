@@ -30,9 +30,7 @@ public class ClientController {
     @PostMapping
     public ResponseEntity<?> registerClient(@RequestBody ClientRegistrationRequest request) {
         log.debug("********** registerClient() ***********");
-        log.debug(request.getClientId() + " ... " + request.getRedirectUri());
         String generatedString = RandomStringUtils.randomAlphanumeric(10);
-        log.debug(generatedString);
 
         String clientSecret = UUID.randomUUID().toString();
 

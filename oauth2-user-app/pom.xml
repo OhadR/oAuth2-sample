@@ -3,8 +3,8 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ohadr.oauth2</groupId>
-	<artifactId>oauth2-auth-server-admin-app</artifactId>
-	<name>oAuth2.0 - auth server admin app</name>
+	<artifactId>oauth2-user-app</artifactId>
+	<name>oAuth2.0 - auth server user app</name>
 
 
 	<parent>

@@ -37,7 +37,7 @@
 		<module>oauth2-client</module>
 		<module>oauth2-resource-server</module>
 		<module>oauth2-auth-server</module>
-		<module>oauth2-auth-server-admin-app</module>
+		<module>oauth2-user-app</module>
 	</modules>
 
 
