@@ -1,3 +1,9 @@
+# user app
+
+this web application is a sample for application the end-user uses to technically use the resources, and to register a 
+new oauth2-client. This is what the /oauth2-clients API does.
+And the auth-server should read the clients from the DB, rather than from the application.yml file.
+
 Starting a MySQL instance is simple:
 
     docker pull mysql/mysql-server
