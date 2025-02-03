@@ -19,7 +19,7 @@ public class UserController {
         log.debug("********** createAccount() ***********");
 
         try {
-            this.userService.createUser(request.getUsername(), request.getPassword());
+            this.userService.createUser(request.getUsername(), request.getPassword(), "USER");
             return ResponseEntity.ok("User created successfully");
         } catch (Exception e) {
             log.error(e.getMessage());
