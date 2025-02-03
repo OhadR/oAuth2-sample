@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/clients/**").hasRole("ADMIN")
-                        .requestMatchers("/users/**").permitAll()
+                        .requestMatchers("/users/**", "/create-account.html").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(withDefaults())

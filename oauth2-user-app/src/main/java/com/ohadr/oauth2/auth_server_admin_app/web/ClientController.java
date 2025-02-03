@@ -5,7 +5,6 @@ import java.time.Duration;
 
 import lombok.extern.log4j.Log4j;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.log4j.Logger;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

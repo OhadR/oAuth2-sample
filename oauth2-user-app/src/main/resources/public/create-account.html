@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    form { margin-bottom: 20px; }
+    label { display: block; margin: 5px 0; }
+    input[type="text"] { width: 100%; padding: 8px; margin: 5px 0; }
+    button { padding: 10px 20px; }
+    #result { margin-top: 20px; }
+  </style>
+</head>
+<body>
+<h1>Create Account</h1>
+
+<form id="create-account-form">
+  <label for="username">username:</label>
+  <input type="text" id="username" required>
+
+  <label for="password">password:</label>
+  <input type="password" id="password" required>
+
+  <button type="submit">Create Account</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+  const createAccountForm = document.getElementById('create-account-form');
+  const resultDiv = document.getElementById('result');
+
+  createAccountForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    try {
+      const response = await fetch('/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ username, password })
+      });
+
+      console.log(response);
+      if (response.ok) {
+        const data = response;
+        resultDiv.innerText = 'Client registered successfully:\n' + JSON.stringify(data, null, 2);
+      } else {
+        resultDiv.innerText = 'Error registering client.';
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      resultDiv.innerText = 'Error registering client.';
+    }
+  });
+</script>
+</body>
+</html>

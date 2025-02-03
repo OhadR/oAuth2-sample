@@ -40,4 +40,7 @@ thus, user can see all his oauth-clients...
 also, maintain the users in the SQL and the change the login for this app to not "admin" role, but a regualr
 user. the login will be "regualr", not "oAuth" (??)
 
-how user is registered? maybe use authentication-flows? :) or just KISS... this is only demo, not prod!!
+## register a new user
+
+in order for a user to login, and then add (register) his oauth2-client, we must let a user self-enrollment.
+To keep it as simple as possible, there is a registration screen in http://localhost:9001/create-account.html.
