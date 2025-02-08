@@ -340,3 +340,7 @@ old:
 new:
 
     [DEBUG] 2025-02-07 22:38:45.309 [http-nio-9001-exec-2] FilterChainProxy - Secured POST /users
+
+![img.png](images/log4j.png)
+
+![img_1.png](images/log4j2.png)

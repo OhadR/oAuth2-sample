@@ -1,12 +1,13 @@
 package com.ohadr.oauth.resource_server.mvc;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class MessagesController
 {
-    private static Logger log = Logger.getLogger(MessagesController.class);
+    Logger log = LogManager.getLogger(getClass());
 
 //    @RequestMapping(method = RequestMethod.GET)
 //    @ResponseBody
