@@ -323,3 +323,24 @@ note: in auth-server yaml file, set:
 ### oauth APIs
 
 ![oauthapis.jpg](oauthapis.jpg)
+
+# Log4j2
+
+why prefer log4j2 over log4j? https://stackoverflow.com/questions/30019585/log4j2-why-would-you-use-it-over-log4j
+
+because the jdbc brings the boot-starter of logging, it needs to be excluded:
+
+https://docs.spring.io/spring-boot/how-to/logging.html#howto.logging.log4j
+
+
+old:
+
+    2025-02-07T21:15:36.504+02:00 DEBUG 39903 --- [nio-9001-exec-4] o.s.s.w.FilterChainProxy                 : Securing POST /login
+
+new:
+
+    [DEBUG] 2025-02-07 22:38:45.309 [http-nio-9001-exec-2] FilterChainProxy - Secured POST /users
+
+![img.png](images/log4j.png)
+
+![img_1.png](images/log4j2.png)
