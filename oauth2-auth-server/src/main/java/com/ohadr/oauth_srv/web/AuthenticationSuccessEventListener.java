@@ -1,6 +1,7 @@
 package com.ohadr.oauth_srv.web;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class AuthenticationSuccessEventListener implements
 		ApplicationListener<AuthenticationSuccessEvent>
 {
-	private static Logger log = Logger.getLogger(AuthenticationSuccessEventListener.class);
+	Logger log = LogManager.getLogger(getClass());
 
 	@Override
 	public void onApplicationEvent(AuthenticationSuccessEvent ev)
